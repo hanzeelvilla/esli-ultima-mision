@@ -14,7 +14,7 @@ Repo oficial del mejor juego de la decada creado por **Esli Laboratorios**.
 
 ## Conexiones
 
-| Componente | Pin ESP32 (u otro microcontrolador) | Descripción        |
+| Componente | Pin Raspberry Pi Pico RP2040 W | Descripción        |
 |------------|-------------------------------------|--------------------|
 | LED (+)    | GPIO 15                             | Señal de encendido |
 | LED (–)    | GND                                 | Tierra             |
@@ -27,7 +27,7 @@ Repo oficial del mejor juego de la decada creado por **Esli Laboratorios**.
 
 1. Clona el repositorio
 ```bash
-git clone git@github.com:hanzeelvilla/esli-ultima-mision.git
+git clone https://github.com/hanzeelvilla/esli-ultima-mision.git
 ```
 
 2. Ingresar al directorio

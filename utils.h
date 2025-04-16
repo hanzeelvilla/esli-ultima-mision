@@ -8,7 +8,10 @@ WiFiMulti wifiMulti;
 bool wifiConnected();
 void configWifi();
 void initWifi();
+void sendDataToAngelAPI();
+void sendDataToConcursoAPI(); 
 
+// WIFI
 bool wifiConnected() {
   return wifiMulti.run() == WL_CONNECTED;
 }
@@ -44,6 +47,10 @@ void initWifi() {
   Serial.println("SSID: " + WiFi.SSID());
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
+}
+
+void sendDataToAngelAPI() {
+  
 }
 
 #endif
