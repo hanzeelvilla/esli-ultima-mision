@@ -4,6 +4,7 @@
 #include "config.h"
 
 WiFiMulti wifiMulti;
+HTTPClient http;
 
 bool wifiConnected();
 void configWifi();
@@ -50,7 +51,41 @@ void initWifi() {
 }
 
 void sendDataToAngelAPI() {
-  
+  if (wifiConnected()) {
+
+    http.begin(PROJECT_ENDPOINT);
+    http.addHeader("Content-Type", "application/json");
+
+    JsonDocument doc;
+    doc["gamertag"] = "PICO";
+    doc["points"] = 9999;
+    doc["shots"] = 9999;
+    doc["destroyedEnemies"] = 9999;
+    doc["destroyedBosses"] = 9999;
+    doc["gameTime"] = 9999;
+
+    String requestBody;
+    serializeJson(doc, requestBody);
+
+    Serial.println("Updating Highscore");
+    int httpResponseCode = http.PUT(requestBody);
+
+    if (httpResponseCode > 0) {
+      String response = http.getString();
+
+      Serial.print("Status Code: ");
+      Serial.println(httpResponseCode);
+      Serial.print("Response: ");
+      Serial.println(response);
+    } else {
+      Serial.print("Error: ");
+      Serial.println(httpResponseCode);
+    }
+    
+    http.end();
+  }
+  else
+    Serial.println("Failed to connect to WiFi.");
 }
 
 #endif

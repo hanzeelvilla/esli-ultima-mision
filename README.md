@@ -36,7 +36,8 @@ cd esli-ultima-mision
 ```
 
 3. Cambia de nombre el archivo `config_template.h` a `config.h` e ingresa tus creedenciales de internet.
-4. Sube el código a la placa
+4. Completa el archivo `config.h` con la información necesaria (creedenciales de internet, IP del servidor, etc.)
+5. Sube el código a la placa
 
 ## Repos relacionados
 

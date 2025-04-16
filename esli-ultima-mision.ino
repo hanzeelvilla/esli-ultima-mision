@@ -1,6 +1,8 @@
 #include "config.h"
 #include "utils.h"
 
+bool testEndpoint = false;
+
 MyLedIO wifiLed(WIFi_LED_PIN);
 
 void setup() {
@@ -14,8 +16,15 @@ void setup() {
 }
 
 void loop() {
-  if (wifiConnected())
+  if (wifiConnected()) {
     wifiLed.turnOn();
+    
+    if (!testEndpoint) {
+      sendDataToAngelAPI(); // just once
+      testEndpoint = true;
+    }
+      
+  }
   else
     wifiLed.turnOff();
 
