@@ -9,7 +9,7 @@ HTTPClient http;
 bool wifiConnected();
 void configWifi();
 void initWifi();
-void sendDataToAngelAPI();
+void sendDataToAngelAPI(const String& requestBody, int rank);
 void sendDataToConcursoAPI(); 
 
 // WIFI
@@ -50,22 +50,12 @@ void initWifi() {
   Serial.println(WiFi.localIP());
 }
 
-void sendDataToAngelAPI() {
+void sendDataToAngelAPI(const String& requestBody, int rank) {
   if (wifiConnected()) {
+    String fullEndpoint = PROJECT_ENDPOINT + String(rank);
 
-    http.begin(PROJECT_ENDPOINT);
+    http.begin(fullEndpoint);
     http.addHeader("Content-Type", "application/json");
-
-    JsonDocument doc;
-    doc["gamertag"] = "PICO";
-    doc["points"] = 9999;
-    doc["shots"] = 9999;
-    doc["destroyedEnemies"] = 9999;
-    doc["destroyedBosses"] = 9999;
-    doc["gameTime"] = 9999;
-
-    String requestBody;
-    serializeJson(doc, requestBody);
 
     Serial.println("Updating Highscore");
     int httpResponseCode = http.PUT(requestBody);
@@ -80,6 +70,10 @@ void sendDataToAngelAPI() {
     } else {
       Serial.print("Error: ");
       Serial.println(httpResponseCode);
+
+      if (httpResponseCode == -1) {
+        Serial.println("Check the URL or server connection.");
+      }
     }
     
     http.end();
