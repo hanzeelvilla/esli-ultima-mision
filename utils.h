@@ -9,7 +9,7 @@ HTTPClient http;
 bool wifiConnected();
 void configWifi();
 void initWifi();
-void sendDataToAngelAPI(const String& requestBody, int rank);
+void sendDataToAngelAPI(const String& requestBody);
 void sendDataToConcursoAPI(); 
 
 // WIFI
@@ -50,11 +50,10 @@ void initWifi() {
   Serial.println(WiFi.localIP());
 }
 
-void sendDataToAngelAPI(const String& requestBody, int rank) {
+void sendDataToAngelAPI(const String& requestBody) {
   if (wifiConnected()) {
-    String fullEndpoint = PROJECT_ENDPOINT + String(rank);
 
-    http.begin(fullEndpoint);
+    http.begin(PROJECT_ENDPOINT);
     http.addHeader("Content-Type", "application/json");
 
     Serial.println("Updating Highscore");

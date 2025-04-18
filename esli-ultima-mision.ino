@@ -7,7 +7,6 @@ MyLedIO wifiLed(WIFi_LED_PIN);
 
 JsonDocument doc;
 String jsonPayload;
-#define TEST_RANK 1
 
 void setup() {
   Serial.begin(115200);
@@ -19,11 +18,11 @@ void setup() {
   wifiLed.init();
 
   doc["gamertag"] = "PICO";
-  doc["points"] = 9999;
-  doc["shots"] = 9999;
-  doc["destroyedEnemies"] = 9999;
-  doc["destroyedBosses"] = 9999;
-  doc["gameTime"] = 9999;
+  doc["points"] = 900;
+  doc["shots"] = 90;
+  doc["destroyedEnemies"] = 9;
+  doc["destroyedBosses"] = 9;
+  doc["gameTime"] = 900;
   serializeJson(doc, jsonPayload);
 }
 
@@ -32,7 +31,7 @@ void loop() {
     wifiLed.turnOn();
     
     if (!testEndpoint) {
-      sendDataToAngelAPI(jsonPayload, TEST_RANK); // just once
+      sendDataToAngelAPI(jsonPayload); // just once
       testEndpoint = true;
     }
       
