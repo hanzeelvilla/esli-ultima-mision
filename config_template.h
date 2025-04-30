@@ -20,7 +20,9 @@
 #define WIFI_TIME_OUT 500
 #define MAX_WIFI_CONNECT_TIME 30000
 
-#define PROJECT_ENDPOINT "http:YOUR_SERVER_IP:3000/api/highscores/1" // change the port if necessary
+#define PROJECT_ENDPOINT "http:YOUR_SERVER_IP:3000/api/highscores" // change the port if necessary
+#define CONCURSO_ENDPOINT "maybe_this_is_secret_.com"
+#define DEVICE_NAME "ESLI_LABS"
 
 #define WIFi_LED_PIN 15
 

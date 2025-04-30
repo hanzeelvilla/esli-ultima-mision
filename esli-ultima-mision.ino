@@ -1,12 +1,15 @@
 #include "config.h"
 #include "utils.h"
 
-bool testEndpoint = false;
+bool testEndpoints = false;
 
 MyLedIO wifiLed(WIFi_LED_PIN);
 
-JsonDocument doc;
-String jsonPayload;
+JsonDocument jsonProject;
+String jsonProjectPayload;
+
+JsonDocument jsonConcurso;
+String jsonConcursoPayload;
 
 void setup() {
   Serial.begin(115200);
@@ -17,22 +20,25 @@ void setup() {
 
   wifiLed.init();
 
-  doc["gamertag"] = "PICO";
-  doc["points"] = 900;
-  doc["shots"] = 90;
-  doc["destroyedEnemies"] = 9;
-  doc["destroyedBosses"] = 9;
-  doc["gameTime"] = 900;
-  serializeJson(doc, jsonPayload);
+  // Our API
+  jsonProject["gamertag"] = "PICO";
+  jsonProject["points"] = 900;
+  jsonProject["shots"] = 90;
+  jsonProject["destroyedEnemies"] = 9;
+  jsonProject["destroyedBosses"] = 9;
+  jsonProject["gameTime"] = 900;
+  serializeJson(jsonProject, jsonProjectPayload);
 }
 
 void loop() {
   if (wifiConnected()) {
     wifiLed.turnOn();
     
-    if (!testEndpoint) {
-      sendDataToAngelAPI(jsonPayload); // just once
-      testEndpoint = true;
+    if (!testEndpoints) {
+      // just once
+      sendDataToAngelAPI(jsonProjectPayload);
+      sendDataToConcursoAPI(3, 3, 3);
+      testEndpoints = true;
     }
       
   }

@@ -5,12 +5,13 @@
 
 WiFiMulti wifiMulti;
 HTTPClient http;
+WiFiClientSecure secureClient; 
 
 bool wifiConnected();
 void configWifi();
 void initWifi();
 void sendDataToAngelAPI(const String& requestBody);
-void sendDataToConcursoAPI(); 
+void sendDataToConcursoAPI(int disparos, int enemigosDestruidos, unsigned long tiempoJuego); 
 
 // WIFI
 bool wifiConnected() {
@@ -22,6 +23,8 @@ void configWifi() {
   wifiMulti.addAP(SSID1, PSWD1);
   wifiMulti.addAP(SSID2, PSWD2); // comment or remove this line if you only have one AP
   // add more APs if needed
+
+  secureClient.setInsecure();
 }
 
 void initWifi() {
@@ -56,8 +59,43 @@ void sendDataToAngelAPI(const String& requestBody) {
     http.begin(PROJECT_ENDPOINT);
     http.addHeader("Content-Type", "application/json");
 
-    Serial.println("Updating Highscore");
+    Serial.println("Updating Highscore - Fetching Angel's API");
     int httpResponseCode = http.PUT(requestBody);
+
+    if (httpResponseCode > 0) {
+      String response = http.getString();
+
+      Serial.print("Status Code: ");
+      Serial.println(httpResponseCode);
+      Serial.print("Response: ");
+      Serial.println(response);
+    } else {
+      Serial.print("Error: ");
+      Serial.println(httpResponseCode);
+
+      if (httpResponseCode == -1) {
+        Serial.println("Check the URL or server connection.");
+      }
+    }
+    
+    http.end();
+  }
+  else
+    Serial.println("Failed to connect to WiFi.");
+}
+
+void sendDataToConcursoAPI(int disparos, int enemigosDestruidos, unsigned long tiempoJuego) {
+  if (wifiConnected()) {
+    http.begin(secureClient, CONCURSO_ENDPOINT);
+    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    String post_data = "device_name=" + String(DEVICE_NAME) + 
+                      "&disparos=" + String(disparos) + 
+                      "&enemigos_destruidos=" + String(enemigosDestruidos) + 
+                      "&tiempo_juego=" + String(tiempoJuego);
+
+    Serial.println("Uploading new Highscore - Fetching Concurso API");
+    int httpResponseCode = http.POST(post_data);
 
     if (httpResponseCode > 0) {
       String response = http.getString();
