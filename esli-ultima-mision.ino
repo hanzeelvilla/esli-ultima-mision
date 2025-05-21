@@ -37,7 +37,7 @@ void loop() {
     if (!testEndpoints) {
       // just once
       sendDataToAngelAPI(jsonProjectPayload);
-      sendDataToConcursoAPI(3, 3, 3);
+      //sendDataToConcursoAPI(3, 3, 3);
       testEndpoints = true;
     }
       

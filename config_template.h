@@ -22,6 +22,7 @@
 
 #define PROJECT_ENDPOINT "http:YOUR_SERVER_IP:3000/api/highscores" // change the port if necessary
 #define CONCURSO_ENDPOINT "maybe_this_is_secret_.com"
+#define API_KEY "TU_API_KEY"
 #define DEVICE_NAME "ESLI_LABS"
 
 #define WIFi_LED_PIN 15

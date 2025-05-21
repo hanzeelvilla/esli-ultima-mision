@@ -58,6 +58,7 @@ void sendDataToAngelAPI(const String& requestBody) {
 
     http.begin(PROJECT_ENDPOINT);
     http.addHeader("Content-Type", "application/json");
+    http.addHeader("x-api-key", API_KEY);
 
     Serial.println("Updating Highscore - Fetching Angel's API");
     int httpResponseCode = http.PUT(requestBody);
